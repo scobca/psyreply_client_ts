@@ -1,6 +1,9 @@
 .DS_Store
 node_modules
 /dist
+dist.zip
+/src/api/api.conf.ts
+/upload.sh
 
 
 # local env files
