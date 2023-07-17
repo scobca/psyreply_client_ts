@@ -1,4 +1,4 @@
-<template>
+`<template>
   <div class="YAnswersList">
 
     <div class="modal">
@@ -37,7 +37,7 @@ export default {
         this.selectedAnswer[0] = id
       } else {
         if (this.selectedAnswer.includes(id)) {
-          const index = this.selectedAnswer.indexOf(id)
+          const store = this.selectedAnswer.indexOf(id)
           this.selectedAnswer.splice(index, 1)
         } else {
           this.selectedAnswer.push(id)
