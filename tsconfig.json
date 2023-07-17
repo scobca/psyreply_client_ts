@@ -1,8 +1,9 @@
-{
+  {
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",
     "strict": true,
+    "strictNullChecks": true,
     "jsx": "preserve",
     "moduleResolution": "node",
     "experimentalDecorators": true,
@@ -11,6 +12,7 @@
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "useDefineForClassFields": true,
+    "useUnknownInCatchVariables": true,
     "sourceMap": true,
     "baseUrl": ".",
     "types": [
