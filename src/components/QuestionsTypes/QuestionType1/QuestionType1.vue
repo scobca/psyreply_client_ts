@@ -36,32 +36,32 @@
   </div>
 </template>
 
-<script>
-import YQuestionsList from "../../UI/YQuestionsList";
-export default {
-  name: "QuestionType1",
-  components: {YQuestionsList},
-  props: {
-    testArrId: Number,
-    questionArrId: Number,
-    passed: Number
-  },
-  computed: {
-    haveAnswer() {
-      const blockOnPass = this.$store.getters.blockOnPass
-      const passedBlock = this.$store.getters.passedBlock
-      const questions = blockOnPass.tests[this.testArrId].questions[this.questionArrId]
+<script lang="ts">
+import {Vue} from "vue-class-component";
+import {Prop} from "vue-property-decorator";
 
-      let answers = 0
-      for (let i = 0; i <= questions.length - 1; i++) {
-        const passedTest = passedBlock.tests[this.testArrId]
-        const answer = passedTest.answers[this.questionArrId * 3 + i].answer
-        answers += answer.length
-      }
+export default class YQuestionType1 extends Vue {
+    @Prop({})
+    testArrId!: number
+    @Prop({})
+    questionArrId!: number
+    @Prop({})
+    passed!: number
 
-      return (answers >= questions.length)
+    get haveAnswer() {
+        const blockOnPass = this.$store.getters.blockOnPass
+        const passedBlock = this.$store.getters.passedBlock
+        const questions = blockOnPass.tests[this.testArrId].question[this.questionArrId]
+
+        let answers = 0
+        for (let i = 0; i <= questions.length - 1; i++) {
+            const passedTest = passedBlock.tests[this.testArrId]
+            const answer = passedTest.answers[this.questionArrId * 3 + i].answer
+            answers += answer.length
+        }
+
+        return (answers >= questions.length)
     }
-  }
 }
 </script>
 

@@ -42,72 +42,70 @@
   </div>
 </template>
 
-<script>
-import YQuestionsList from "../../UI/YQuestionsList";
+<script lang="ts">
+import {Vue} from "vue-class-component";
+import {Prop, Watch} from "vue-property-decorator";
+import {OptionDto} from "@/api/dto/option.dto";
 
-export default {
-  name: "QuestionType2",
-  components: {YQuestionsList},
-  props: {
-    testArrId: Number,
-    questionArrId: Number,
-    passed: Number,
-  },
-  data() {
-    return {
-      haveAnswer: false,
-      selectedAnswer: null
-    }
-  },
-  created() {
-    const answer = this.$store.getters.passedBlock.tests[this.testArrId].answers[this.questionArrId].answer;
-    console.log(answer);
-    if (answer.length) {
-      this.selectedAnswer = answer[0] - 1;
-    } else {
-      this.selectedAnswer = null;
-    }
-    console.log()
-  },
-  computed: {
-    questionData() {
-      const coordinates = {
-        test_id: this.testArrId,
-        question_id: this.questionArrId
-      }
+export default class QuestionType2 extends Vue {
+    @Prop({})
+    testArrId!: number
+    @Prop({})
+    questionArrId!: number
+    @Prop({})
+    passed!: number
 
-      return this.$store.getters.questionData(coordinates)
-    },
-    answer() {
-      const answers = JSON.parse(this.questionData.value)
-      const options = {}
-      options.max = answers.length - 1
-      options.min = 0
-      return options
-    },
-    selectedAnswerTitle() {
-      const answers = JSON.parse(this.questionData.value)
-      if (typeof this.selectedAnswer === 'number') {
-        return answers[this.selectedAnswer].title
-      } else {
-        return 'Сдвиньте ползунок'
-      }
+    haveAnswer: boolean = false
+    selectedAnswer: number | null = 0
+
+    created() {
+        const answer = this.$store.getters.passedBlock.tests[this.testArrId].answers[this.questionArrId].answer;
+        console.log(answer);
+        if (answer.length)
+            this.selectedAnswer = answer[0] - 1;
+        else
+            this.selectedAnswer = null
+        console.log()
     }
-  },
-  watch: {
-    selectedAnswer(newValue, oldValue) {
-      console.log(newValue);
-      if (typeof newValue === 'number') {
-        this.haveAnswer = true
-        const data = {
-          test_id: this.testArrId,
-          question_id: this.questionArrId,
-          answer: [this.selectedAnswer + 1]
+
+    get questionData() {
+        const coordinates = {
+            test_id: this.testArrId,
+            question_id: this.questionArrId
         }
-        this.$store.commit('selectAnswer', data)
-      }
+
+        return this.$store.getters.questionData(coordinates)
     }
-  }
+    get answer() {
+        const answers = JSON.parse(this.questionData.value)
+        const options = new OptionDto()
+        options.max = answers.length - 1
+        options.min = 0
+        return options
+    }
+    get selectedAnswerTitle() {
+        const answers = JSON.parse(this.questionData.value)
+        if (typeof this.selectedAnswer === 'number') {
+            return answers[this.selectedAnswer].title
+        } else {
+            return 'Сдвиньте ползунок'
+        }
+    }
+
+    @Watch('selectedAnswer')
+    newSelected(newValue, oldValue) {
+        console.log(newValue);
+        if (typeof newValue === 'number') {
+            this.haveAnswer = true
+            const data = {
+                test_id: this.testArrId,
+                question_id: this.questionArrId,
+                answer: [this.selectedAnswer + 1]
+            }
+            this.$store.commit('selectAnswer', data)
+        }
+    }
+
 }
 </script>
 
