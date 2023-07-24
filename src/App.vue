@@ -1,13 +1,24 @@
 <template>
-    <p> p </p>
+    <YAnswersList/>
+    <p> s;dl </p>
 </template>
 
 <script lang="ts">
-import {Vue} from "vue-class-component";
+import {Options, Vue} from "vue-class-component";
+import YAnswersList from "@/components/UI/YAnswersList.vue";
 
-export default class App extends Vue {}
+
+@Options({
+    name: 'App',
+    components: {YAnswersList}
+})
+export default class App extends Vue {
+
+}
 </script>
 
 <style>
-
+:root {
+    --light-opacity: hsla(0, 0%, 100%, 0.27);
+}
 </style>

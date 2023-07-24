@@ -1,34 +1,34 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 
 const routes: Array<RouteRecordRaw> = [
-    {
-        path: '/',
-        component: () => import('@/views/HomeView.vue'),
-        meta: {requireAuth: false}
-    },
-    {
-        path: '/:view/:token',
-        component: () => import('@/views/MainView.vue'),
-        meta: {requireAuth: false}
-    },
-    {
-        path: '/signup/:telegramId/:botId',
-        name: 'signup',
-        component: () => import('@/views/HomeView.vue'),
-        meta: {requireAuth: false}
-    },
-    {
-        path: '/login/:telegramId/:botId',
-        name: 'login',
-        component: () => import('@/views/HomeView.vue'),
-        meta: {requireAuth: false}
-    },
-    {
-        path: '/profile/:telegramId/:botId',
-        name: 'profile',
-        component: () => import('@/views/HomeView.vue'),
-        meta: {requireAuth: true}
-    }
+    // {
+    //     path: '/',
+    //     component: () => import('@/views/HomeView.vue'),
+    //     meta: {requireAuth: false}
+    // },
+    // {
+    //     path: '/:view/:token',
+    //     component: () => import('@/views/MainView.vue'),
+    //     meta: {requireAuth: false}
+    // },
+    // {
+    //     path: '/signup/:telegramId/:botId',
+    //     name: 'signup',
+    //     component: () => import('@/views/HomeView.vue'),
+    //     meta: {requireAuth: false}
+    // },
+    // {
+    //     path: '/login/:telegramId/:botId',
+    //     name: 'login',
+    //     component: () => import('@/views/HomeView.vue'),
+    //     meta: {requireAuth: false}
+    // },
+    // {
+    //     path: '/profile/:telegramId/:botId',
+    //     name: 'profile',
+    //     component: () => import('@/views/HomeView.vue'),
+    //     meta: {requireAuth: true}
+    // }
 ]
 
 const router = createRouter({
