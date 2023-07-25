@@ -2,11 +2,14 @@ import {PassedBlockDto} from "@/api/dto/passed-block.dto";
 import {BlockOnPassDto} from "@/api/dto/block-on-pass.dto";
 import Client from "@/api/Client";
 import {BlockTestsDto} from "@/api/dto/block-tests.dto";
+import {all} from "axios";
 
 interface TestsModuleState {
     passedBlock: PassedBlockDto | null,
     blockOnPass: BlockOnPassDto | null,
     blockTests: BlockTestsDto[] | null,
+    answersCount: number,
+    allDataIsReady: boolean,
 }
 
 export const TestsModule = {
@@ -14,15 +17,17 @@ export const TestsModule = {
         passedBlock: null,
         blockOnPass: null,
         blockTests: [],
+        answersCount: 0,
+        allDataIsReady: false
     }),
     getters: {
-        blockPassed(state: { passedBlock: any; }) {
+        passedBlock(state: any) {
             return state.passedBlock
         },
-        blockOnPass(state: { blockOnPass: any; }) {
+        blockOnPass(state: any) {
             return state.blockOnPass
         },
-        questionData: (state: { blockOnPass: { tests: any[]; } | null; }) => (coordinates: {
+        questionData: (state: any) => (coordinates: {
             test_id: number;
             question_id: number;
         }) => {
@@ -30,26 +35,37 @@ export const TestsModule = {
                 return null
             else {
                 const test = state.blockOnPass.tests[coordinates.test_id];
-                return test.questions[coordinates.question_id].question;
-            }
-        },
-        answerData: (state: { blockOnPass: { tests: any[]; } | null; }) => (coordinates: {
-            test_id: number;
-            question_id: number;
-        }) => {
-            if (state.blockOnPass == null)
-                return null
-            else {
-                const test = state.blockOnPass.tests[coordinates.test_id];
-                return test.questions[coordinates.test_id].answer;
+                console.log('test', test)
+
+                const questions = test.questions[0]
+                return questions[coordinates.question_id]
+
             }
         }
     },
     mutations: {
         updatePassedBlock(state: { passedBlock: any; }, block: any) {
             state.passedBlock = block
-            console.log(state.passedBlock)
+            // console.log('passedBlock', state.passedBlock)
         },
+        updateBlockOnPass(state: any, block: any) {
+            state.blockOnPass = block
+            // console.log('blockOnPass', state.blockOnPass)
+        },
+        setAnswersCount(state: any, data: number) {
+            state.answersCount = data
+        },
+        allDataIsReady(state: any) {
+            state.allDataIsReady = true
+        },
+        selectAnswer(state: any ,data: any) {
+            if (state.passedBlock == null)
+                return null
+            else {
+                const test = state.passedBlock.tests[data.test_id]
+                test.answers[data.question_id].answer = data.answer
+            }
+        }
     },
     actions: {
         async getBlock({commit, state}: any) {
@@ -63,6 +79,7 @@ export const TestsModule = {
                         time_on_pass: 0,
                         tests: state.blockTests
                     }
+                    // console.log('r', r)
 
                     r.tests.forEach((test: any) => {
                         if (test.type_id == 6 || test.type_id == 7)
@@ -81,8 +98,32 @@ export const TestsModule = {
                         })
 
                         commit('updatePassedBlock', passedBlock);
-                        })
+
+                        r.games = r.tests.filter((test: any) => test.type_id == 6 || test.type_id == 7)
+                        r.tests = r.tests.map((test: any, id: number, array: any) => {
+                            if (test.type_id == 2) {
+                                const questionGroups: any = []
+                                test.questions.forEach((el: any, id: number) => {
+                                    if (id % 3 === 0) {
+                                        questionGroups.push([el])
+                                    } else {
+                                        questionGroups[questionGroups.length - 1].push(el)
+                                    }
+                                })
+                                array[id].questions = questionGroups
+                            }
+                            return test;
+                        }).filter((test: any) => test.type_id != 6 && test.type_id != 7)
+
+                        commit('updateBlockOnPass', r)
+
+                        let answersCount: number = 0
+                        r.tests.map((test: any) => test.questions.map((q: any) => answersCount++))
+                        commit('setAnswersCount', answersCount)
+
+                        commit('allDataIsReady')
                     })
-                }
+                })
         }
     }
+}

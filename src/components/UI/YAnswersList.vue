@@ -3,13 +3,16 @@
 
         <div class="modal">
             <div class="list">
-<!--                <YAnswersItem v-for="item in answers">-->
-<!--                    {{item}}-->
-<!--                </YAnswersItem>-->
+                <YAnswersItem v-for="answer in answers"
+                              @click="selectAnswer(answer.id)"
+                              :last="answer.last"
+                              :active="(selectedAnswer.includes(answer.id)) || checkSelection(answer.id)"
+                >
+                    {{answer.title}}
+                </YAnswersItem>
             </div>
         </div>
         <br>
-        <p @click="getAnswers">answers</p>
     </div>
 </template>
 
@@ -37,30 +40,56 @@ export default class YAnswerList extends Vue {
     @Prop({default: false})
     more!: boolean
 
-    getAnswers() {
-        const coordinates = {
-            test_id: 1,
-            question_id: 1
+    selectedAnswer: any[] = []
+
+    selectAnswer(id: number) {
+        console.log(id)
+        if (!this.more) {
+            this.selectedAnswer[0] = id
         }
-
-        const answer = this.$store.getters.answerData(coordinates)
-        // console.log(, 'answer')
+        else {
+            if (this.selectedAnswer.includes(id)) {
+                const index = this.selectedAnswer.indexOf(id)
+                this.selectedAnswer.splice(index, 1)
+            } else {
+                this.selectedAnswer.push(id)
+            }
+        }
+        const data = {
+            // test_id: this.testArrId,
+            // question_id: this.questionArrId,
+            test_id: 0,
+            question_id: 0,
+            answer: this.selectedAnswer
+        }
     }
-
+    checkSelection(id: number) {
+        // return this.$store.getters.passedBlock.tests[this.testArrId].answers[this.questionArrId].answer.includes(id);
+        return this.$store.getters.passedBlock.tests[0].answers[0].answer.includes(id);
+    }
     get answers() {
         if (this.$store.getters.blockOnPass != null) {
             const coordinates = {
-                test_id: this.testArrId,
-                question_id: this.questionArrId,
+                test_id: 0,
+                question_id: 0
             }
 
-            // return this.$store.getters.answerData(coordinates)
-            return true
-        }
-        else
-            return null
+            const question: any[] = this.$store.getters.questionData(coordinates)
+            // console.log('questions', question)
+
+            let i = 0;
+            const answers = JSON.parse(question[coordinates.question_id].value);
+            return answers.map((el: any) => {
+                el.last = (i >= answers.length - 1);
+                i++;
+                return el;
+            });
+        } else
+            return null;
     }
 }
+
+
 </script>
 
 <style scoped>
