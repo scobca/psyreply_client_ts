@@ -62,6 +62,7 @@ export default class YAnswerList extends Vue {
             question_id: 0,
             answer: this.selectedAnswer
         }
+        this.$store.commit('selectAnswer', data)
     }
     checkSelection(id: number) {
         // return this.$store.getters.passedBlock.tests[this.testArrId].answers[this.questionArrId].answer.includes(id);
