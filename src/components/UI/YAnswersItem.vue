@@ -5,8 +5,8 @@
                 <slot></slot>
             </div>
             <div
-                class="item__elipce"
-                :class="{ 'item__elipce--active': active }"
+                class="item__ellipse"
+                :class="{ 'item__ellipse--active': active }"
             ></div>
         </div>
 
@@ -54,34 +54,31 @@ export default class YAnswersItem extends Vue {
     padding-top: 5px;
     padding-bottom: 10px;
 }
-.item__elipce{
+.item__ellipse{
     width: 1rem;
     height: 1rem;
     border-radius: 100%;
-    background-color: rgba(217, 217, 217, 0.17);;
+    background-color: hsla(0, 0%, 85%, 0.17);;
 }
-.item__elipce--active {
+.item__ellipse--active {
     background-color: hsl(137, 100%, 65%);
 }
 hr {
     margin: 1rem 0 1rem 0;
     min-width: 30vw;
-    //border-left: 0 solid white;
-    //border-right: 0 solid white;
-    //border-bottom: 0 solid white;
-    border-top: 1px solid rgba(255, 255, 255, 0.18);
+    border-top: 1px solid hsla(0, 0%, 100%, 0.18);
 }
 .item-active {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    background: #00000042;
+    background: hsla(0, 0%, 0%, 0.26);
     padding-left: 20px;
     padding-right: 10px;
     padding-top: 5px;
     border-radius: 20px;
-    border: 1px solid #ffffff61;
+    border: 1px solid hsla(0, 0%, 100%, 0.38);
 }
 @media screen and (max-width:820px){
     .item__text{

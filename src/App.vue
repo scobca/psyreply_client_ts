@@ -1,16 +1,16 @@
 <template>
-    <YAnswersList/>
+    <YButton>test btt</YButton>
     <p> s;dl </p>
 </template>
 
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
-import YAnswersList from "@/components/UI/YAnswersList.vue";
+import YButton from "@/components/UI/YButton.vue";
 
 
 @Options({
     name: 'App',
-    components: {YAnswersList}
+    components: {YButton}
 })
 export default class App extends Vue {
 
@@ -19,6 +19,11 @@ export default class App extends Vue {
 
 <style>
 :root {
+    --light: hsl(0, 0%, 100%);
     --light-opacity: hsla(0, 0%, 100%, 0.27);
+
+    background-image: url('@/assets/img/bg.png');
+    background-size: cover;
+    background-attachment: fixed;
 }
 </style>
