@@ -2,7 +2,6 @@ import {PassedBlockDto} from "@/api/dto/passed-block.dto";
 import {BlockOnPassDto} from "@/api/dto/block-on-pass.dto";
 import Client from "@/api/Client";
 import {BlockTestsDto} from "@/api/dto/block-tests.dto";
-import {all} from "axios";
 
 interface TestsModuleState {
     passedBlock: PassedBlockDto | null,
