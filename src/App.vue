@@ -8,6 +8,9 @@
     <transition name="popup">
         <y-popup/>
     </transition>
+    <transition name="popup">
+        <y-popup-warn/>
+    </transition>
 </template>
 
 <script lang="ts">
@@ -16,11 +19,12 @@ import YModal from "@/components/UI/YModal.vue";
 import YAnswersList from "@/components/UI/YAnswersList.vue";
 import YPopup from "@/components/UI/YPopup.vue";
 import YPopupError from "@/components/UI/YPopupError.vue";
+import YPopupWarn from "@/components/UI/YPopupWarn.vue";
 
 
 @Options({
     name: 'App',
-    components: {YPopupError, YPopup, YAnswersList, YModal}
+    components: {YPopupWarn, YPopupError, YPopup, YAnswersList, YModal}
 })
 export default class App extends Vue {
 
@@ -29,7 +33,7 @@ export default class App extends Vue {
 
 <style>
 
-.main{
+.main {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -53,6 +57,7 @@ export default class App extends Vue {
 .main__bottom {
     position: relative;
 }
+
 .bottom__container {
     width: 100%;
 }
@@ -70,12 +75,14 @@ export default class App extends Vue {
     width: 50vw;
     text-align: left;
 }
+
 .disclaimer {
     font-style: italic;
     color: hsla(0, 0%, 100%, 0.4);
     font-weight: 400;
     font-size: 1.3rem;
 }
+
 .before_test_heading {
     border-bottom: 1px solid hsla(0, 0%, 100%, 0.24);
     padding-bottom: 2rem;
@@ -91,6 +98,7 @@ export default class App extends Vue {
     width: 7px;
     max-height: 70vh;
 }
+
 *::-webkit-scrollbar-track {
     border-radius: 5px;
     height: 70vh;
@@ -156,7 +164,7 @@ export default class App extends Vue {
     color: var(--light);
 }
 
-@media screen and (max-width:820px) {
+@media screen and (max-width: 820px) {
     .before_test_text {
         font-size: 2rem;
         padding: 2rem;
@@ -164,17 +172,20 @@ export default class App extends Vue {
         width: 87vw;
         text-align: left;
     }
+
     .disclaimer {
         font-style: italic;
         color: #ffffff66;
         font-weight: 400;
         font-size: 1.7rem;
     }
+
     .before_test_heading {
         border-bottom: 1px solid hsla(0, 0%, 100%, 0.24);
         padding-bottom: 2rem;
         text-align: left
     }
+
     .question {
         position: fixed;
         left: 50%;
@@ -182,6 +193,7 @@ export default class App extends Vue {
         bottom: 0;
         top: auto;
     }
+
     .main__bottom {
         display: flex;
         width: 100%;
