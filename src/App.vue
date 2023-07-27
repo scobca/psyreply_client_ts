@@ -1,19 +1,26 @@
 <template>
-    <YCoolButton>test cool btt</YCoolButton>
-    <YButton>test btt</YButton>
-    <p> s;dl </p>
+    <YModal>
+        <YAnswersList/>
+    </YModal>
+    <transition name="popup">
+        <y-popup-error/>
+    </transition>
+    <transition name="popup">
+        <y-popup/>
+    </transition>
 </template>
 
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
-import YButton from "@/components/UI/YButton.vue";
+import YModal from "@/components/UI/YModal.vue";
 import YAnswersList from "@/components/UI/YAnswersList.vue";
-import YCoolButton from "@/components/UI/YCoolButton.vue";
+import YPopup from "@/components/UI/YPopup.vue";
+import YPopupError from "@/components/UI/YPopupError.vue";
 
 
 @Options({
     name: 'App',
-    components: {YCoolButton, YAnswersList, YButton}
+    components: {YPopupError, YPopup, YAnswersList, YModal}
 })
 export default class App extends Vue {
 
