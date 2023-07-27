@@ -1,4 +1,5 @@
 <template>
+    <YCoolButton>test cool btt</YCoolButton>
     <YButton>test btt</YButton>
     <p> s;dl </p>
 </template>
@@ -12,7 +13,7 @@ import YCoolButton from "@/components/UI/YCoolButton.vue";
 
 @Options({
     name: 'App',
-    components: {YAnswersList, YButton}
+    components: {YCoolButton, YAnswersList, YButton}
 })
 export default class App extends Vue {
 
