@@ -1,5 +1,4 @@
 import {StorePopupAppDto} from "@/api/dto/store-popup-app.dto";
-import {store} from "@/store/store";
 
 interface PopupModuleState {
     popupApp: StorePopupAppDto | null
@@ -37,13 +36,13 @@ export const PopupModule = {
     },
     mutations: {
         openErrorPopup(state: any, message: string) {
-            const popupError = store.getters.popupError
+            const popupError = state.popupApp.popupError
 
             popupError.show = true;
             popupError.message = message;
         },
         closeErrorPopup(state: any) {
-            const popupError = store.getters.popupError
+            const popupError = state.popupApp.popupError
 
             popupError.show = false;
             popupError.message = null;
@@ -56,18 +55,18 @@ export const PopupModule = {
             popupWarn.acceptCallback = body.acceptCallback;
         },
         acceptWarnPopup(state: any) {
-            const popupWarn = store.getters.popupWarn
+            const popupWarn = state.popupApp.popupWarn
 
             popupWarn.acceptCallback();
         },
         closeWarnPopup(state: any) {
-            const popupWarn = store.getters.popupWarn
+            const popupWarn = state.popupApp.popupWarn
 
             popupWarn.show = false;
             popupWarn.message = null;
         },
         openPopup(state: any, message: string) {
-            const popup = store.getters.popup
+            const popup = state.popupApp.popup
 
             popup.show = true;
             popup.message = message;
