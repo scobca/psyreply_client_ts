@@ -1,4 +1,4 @@
 export type PopupErrorDto = {
     show: boolean,
-    message: string
+    message: string | null
 }
