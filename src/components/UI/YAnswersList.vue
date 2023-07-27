@@ -14,6 +14,10 @@
         </div>
         <br>
     </div>
+    <p @click="open"> test popup </p>
+    <p @click="openErr"> test error popup </p>
+    <p @click="openWarnVer1"> test warn popup ver 1</p>
+    <p @click="openWarnVer2"> test warn popup ver 2</p>
 </template>
 
 <script lang="ts">
@@ -41,6 +45,34 @@ export default class YAnswerList extends Vue {
     more!: boolean
 
     selectedAnswer: any[] = []
+
+    open() {
+        this.$store.commit('openPopup', 'test message')
+    }
+
+    openErr() {
+        this.$store.commit('openErrorPopup', 'error popup')
+    }
+
+    openWarnVer1() {
+        this.$store.commit('openWarnPopup', {
+            message: 'mess1',
+            acceptCallback: () => {
+                this.$store.commit('openPopup', 'popup1')
+            }
+        })
+    }
+
+    openWarnVer2() {
+        const body = {
+            message: 'mess2',
+            acceptCallback: () => {
+                this.$store.commit('openPopup', 'popup2')
+            }
+        }
+
+        this.$store.commit('openWarnPopup', body)
+    }
 
     selectAnswer(id: number) {
         console.log(id)
