@@ -1,4 +1,5 @@
 import {StorePopupAppDto} from "@/api/dto/store-popup-app.dto";
+import {store} from "@/store/store";
 
 interface PopupModuleState {
     popupApp: StorePopupAppDto | null
@@ -36,37 +37,37 @@ export const PopupModule = {
     },
     mutations: {
         openErrorPopup(state: any, message: string) {
-            const popupError = state.popupApp.popupError
+            const popupError = store.getters.popupError
 
             popupError.show = true;
             popupError.message = message;
         },
         closeErrorPopup(state: any) {
-            const popupError = state.popupApp.popupError
+            const popupError = store.getters.popupError
 
             popupError.show = false;
             popupError.message = null;
         },
-        // openWarnPopup(state: any, acceptCallback: any, message: string) {
-        //     const popupWarn = state.popupApp.popupWarn
-        //
-        //     popupWarn.show = true;
-        //     popupWarn.message = message;
-        //     popupWarn.acceptCallback = acceptCallback;
-        // },
+        openWarnPopup(state: any, body: {message: string, acceptCallback: string }) {
+            const popupWarn = store.getters.popupWarn
+
+            popupWarn.show = true;
+            popupWarn.message = body.message;
+            popupWarn.acceptCallback = body.acceptCallback;
+        },
         acceptWarnPopup(state: any) {
-            const popupWarn = state.popupApp.popupWarn
+            const popupWarn = store.getters.popupWarn
 
             popupWarn.acceptCallback();
         },
         closeWarnPopup(state: any) {
-            const popupWarn = state.popupApp.popupWarn
+            const popupWarn = store.getters.popupWarn
 
             popupWarn.show = false;
             popupWarn.message = null;
         },
         openPopup(state: any, message: string) {
-            const popup = state.popupApp.popup
+            const popup = store.getters.popup
 
             popup.show = true;
             popup.message = message;
@@ -75,7 +76,6 @@ export const PopupModule = {
                 popup.message = null
             }, 3000)
         },
-
     },
     actions: {},
 }
