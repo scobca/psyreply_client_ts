@@ -48,8 +48,8 @@ export const PopupModule = {
             popupError.show = false;
             popupError.message = null;
         },
-        openWarnPopup(state: any, body: {message: string, acceptCallback: string }) {
-            const popupWarn = store.getters.popupWarn
+        openWarnPopup(state: any, body: {message: string, acceptCallback: any}) {
+            const popupWarn = state.popupApp.popupWarn
 
             popupWarn.show = true;
             popupWarn.message = body.message;
